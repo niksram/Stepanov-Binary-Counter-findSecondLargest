@@ -6,8 +6,8 @@
 typedef struct Node
 {
     int val;
-    Node *link;
-}
+    struct Node *link;
+} Node;
 
 typedef struct Deck
 {
@@ -20,15 +20,16 @@ typedef struct Hanger //this structure holds the entire skewed multiarray
     Deck *deck;
 } Hanger;
 
-void compete(Hanger *hanger, int *ele, int *temp, int level);
+void compete(Hanger *, Node *, int);
 void find_second_greatest(int *, int);
 Hanger *hanger_init(int);
 int logceil(int);
 Node *create_node(int);
+void freelist(Node *);
+void print_list(Node*);
 
 int main()
 {
-    printf("%d\n", loger(8));
     int a[8] = {20, 5, 15, 25, 10, 80, 60, 50};
     find_second_greatest(a, 8);
 }
@@ -38,55 +39,37 @@ void find_second_greatest(int *numbers, int length)
     Hanger *hanger = hanger_init(length);
     for (int i = 0; i < length; i++)
     {
-        compete(hanger, numbers + i, temp, 0);
+        Node *node = create_node(numbers[i]);
+        compete(hanger, node, 0);
     }
 }
 
-void compete(Hanger *hanger, int *ele, int *temp, int level)
+void compete(Hanger *hanger, Node *pass, int level)
 {
-    if (!hanger->deck[level].container && level < hanger->stretch)
+    if (!hanger->deck[level].head)
     {
-        hanger->deck[level].container = 1;
-        for (int i = 0; i <= level; i++)
-        {
-            hanger->deck[level].chart[i] = ele[i];
-        }
+        hanger->deck[level].head = pass;
     }
     else
     {
-        hanger->deck[level].container = 0;
-        for (int i = 0; i <= level; i++)
-        {
-            printf("%d ", ele[i]);
-        }
+        Node *win = hanger->deck[level].head;
+        Node *lose = pass;
+        print_list(lose);
         printf("X ");
-        for (int i = 0; i <= level; i++)
+        print_list(win);
+        if (win->val < lose->val)
         {
-            printf("%d ", hanger->deck[level].chart[i]);
+            lose = win;
+            win = pass;
         }
-        printf(" = ");
-        int i = 0, j = 0, pos = 0;
-        while (i <= level && j <= level)
-        {
-            if (ele[i] > hanger->deck[level].chart[j])
-                temp[pos++] = ele[i++];
-            else
-                temp[pos++] = hanger->deck[level].chart[j++];
-        }
-        while (i <= level)
-            temp[pos++] = ele[i++];
-        while (j <= level)
-            temp[pos++] = hanger->deck[level].chart[j++];
-        for (int i = 0; i < pos; i++)
-        {
-            hanger->deck[level].chart[i] = temp[i];
-        }
-        for (int i = 0; i <= level + 1; i++)
-        {
-            printf("%d ", temp[i]);
-        }
+        freelist(lose);
+        lose->link = win->link;
+        win->link = lose;
+        hanger->deck[level].head = NULL;
+        printf("= ");
+        print_list(win);
         printf("\n");
-        compete(hanger, hanger->deck[level].chart, temp, level + 1);
+        compete(hanger, win, level + 1);
     }
 }
 
@@ -97,7 +80,7 @@ Hanger *hanger_init(int length)
     hanger->deck = (Deck *)malloc(hanger->stretch * sizeof(Deck));
     for (int i = 0; i < hanger->stretch; i++)
     {
-        hanger->deck[i].list = NULL;
+        hanger->deck[i].head = NULL;
     }
     return hanger;
 }
@@ -107,6 +90,26 @@ Node *create_node(int val)
     Node *node = (Node *)malloc(sizeof(Node));
     node->link = NULL;
     node->val = val;
+    return node;
+}
+
+void freelist(Node *node)
+{
+    if (node->link)
+    {
+        freelist(node->link);
+        free(node->link);
+        node->link = NULL;
+    }
+}
+
+void print_list(Node* node)
+{
+    if(node)
+    {
+        printf("%d ",node->val);
+        print_list(node->link);
+    }
 }
 
 int logceil(int n)
