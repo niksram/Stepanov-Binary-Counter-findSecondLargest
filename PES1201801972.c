@@ -6,7 +6,7 @@
 typedef struct Node
 {
     int val;
-    Node* link;
+    Node *link;
 }
 
 typedef struct Deck
@@ -20,15 +20,16 @@ typedef struct Hanger //this structure holds the entire skewed multiarray
     Deck *deck;
 } Hanger;
 
-void find_second_greatest(int *numbers, int length);
-Hanger *hanger_init(int length);
-int logceil(int);
 void compete(Hanger *hanger, int *ele, int *temp, int level);
+void find_second_greatest(int *, int);
+Hanger *hanger_init(int);
+int logceil(int);
+Node *create_node(int);
 
 int main()
 {
-    printf("%d\n",loger(8));
-    int a[8] = {20, 5, 15, 25, 10, 80,60,50};
+    printf("%d\n", loger(8));
+    int a[8] = {20, 5, 15, 25, 10, 80, 60, 50};
     find_second_greatest(a, 8);
 }
 
@@ -39,8 +40,6 @@ void find_second_greatest(int *numbers, int length)
     {
         compete(hanger, numbers + i, temp, 0);
     }
-    free(temp);
-    printf("\n%d\n", hanger->deck[hanger->stretch - 1].chart[1]);
 }
 
 void compete(Hanger *hanger, int *ele, int *temp, int level)
@@ -94,21 +93,28 @@ void compete(Hanger *hanger, int *ele, int *temp, int level)
 Hanger *hanger_init(int length)
 {
     Hanger *hanger = (Hanger *)malloc(sizeof(Hanger));
-    hanger->stretch = loger(length);
+    hanger->stretch = logceil(length);
     hanger->deck = (Deck *)malloc(hanger->stretch * sizeof(Deck));
     for (int i = 0; i < hanger->stretch; i++)
     {
-        hanger->deck[i].size = 0;
+        hanger->deck[i].list = NULL;
     }
     return hanger;
 }
 
+Node *create_node(int val)
+{
+    Node *node = (Node *)malloc(sizeof(Node));
+    node->link = NULL;
+    node->val = val;
+}
+
 int logceil(int n)
 {
-    int c=1,i=1;
-    while(i<n)
+    int c = 1, i = 1;
+    while (i < n)
     {
-        i*=2;
+        i *= 2;
         c++;
     }
     return c;
