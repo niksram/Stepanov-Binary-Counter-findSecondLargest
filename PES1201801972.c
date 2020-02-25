@@ -26,12 +26,12 @@ Hanger *hanger_init(int);
 int logceil(int);
 Node *create_node(int);
 void freelist(Node *);
-void print_list(Node*);
+void print_list(Node *);
 
 int main()
 {
-    int a[8] = {20, 5, 15, 25, 10, 80, 60, 50};
-    find_second_greatest(a, 8);
+    int a[7] = {2, 3, 1, 4, 5, 0, 7};
+    find_second_greatest(a, 7);
 }
 
 void find_second_greatest(int *numbers, int length)
@@ -42,6 +42,24 @@ void find_second_greatest(int *numbers, int length)
         Node *node = create_node(numbers[i]);
         compete(hanger, node, 0);
     }
+    int final = 0;
+    while (final < hanger->stretch - 1 && !hanger->deck[final].head)
+    {
+        final++;
+    }
+    if (final < hanger->stretch - 1)
+    {
+        compete(hanger, hanger->deck[final].head, final + 1);
+    }
+    Node *temp = hanger->deck[hanger->stretch - 1].head->link;
+    int slar = temp->val;
+    while (temp->link)
+    {
+        temp = temp->link;
+        if (slar < temp->val)
+            slar = temp->val;
+    }
+    printf("\n%d\n", slar);
 }
 
 void compete(Hanger *hanger, Node *pass, int level)
@@ -54,9 +72,9 @@ void compete(Hanger *hanger, Node *pass, int level)
     {
         Node *win = hanger->deck[level].head;
         Node *lose = pass;
-        print_list(lose);
-        printf("X ");
         print_list(win);
+        printf("X ");
+        print_list(lose);
         if (win->val < lose->val)
         {
             lose = win;
@@ -103,11 +121,11 @@ void freelist(Node *node)
     }
 }
 
-void print_list(Node* node)
+void print_list(Node *node)
 {
-    if(node)
+    if (node)
     {
-        printf("%d ",node->val);
+        printf("%d ", node->val);
         print_list(node->link);
     }
 }
