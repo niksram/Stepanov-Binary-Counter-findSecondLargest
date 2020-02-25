@@ -28,12 +28,6 @@ Node *create_node(int);
 void freelist(Node *);
 void print_list(Node *);
 
-int main()
-{
-    int a[7] = {2, 3, 1, 4, 5, 0, 7};
-    find_second_greatest(a, 7);
-}
-
 void find_second_greatest(int *numbers, int length)
 {
     Hanger *hanger = hanger_init(length);
