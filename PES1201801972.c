@@ -30,6 +30,7 @@ void print_list(Node *);
 
 void find_second_greatest(int *numbers, int length)
 {
+    comper=0;
     Hanger *hanger = hanger_init(length);
     for (int i = 0; i < length; i++)
     {
@@ -45,10 +46,11 @@ void find_second_greatest(int *numbers, int length)
     while (temp->link)
     {
         temp = temp->link;
-        if (slar < temp->val)
+        if (++comper && slar < temp->val)
             slar = temp->val;
     }
     printf("\n%d\n", slar);
+    printf("\n%d\n", comper);
 }
 
 void compete(Hanger *hanger, Node *pass, int level)
@@ -64,7 +66,7 @@ void compete(Hanger *hanger, Node *pass, int level)
         print_list(win);
         printf("X ");
         print_list(lose);
-        if (win->val < lose->val)
+        if (++comper && win->val < lose->val)
         {
             lose = win;
             win = pass;
