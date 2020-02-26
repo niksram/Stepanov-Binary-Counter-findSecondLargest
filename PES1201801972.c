@@ -36,15 +36,10 @@ void find_second_greatest(int *numbers, int length)
         Node *node = create_node(numbers[i]);
         compete(hanger, node, 0);
     }
-    int final = 0;
-    while (final < hanger->stretch - 1 && !hanger->deck[final].head)
-    {
-        final++;
-    }
-    if (final < hanger->stretch - 1)
-    {
-        compete(hanger, hanger->deck[final].head, final + 1);
-    }
+    for (int final = 0; final < hanger->stretch - 1; final++)
+        if(hanger->deck[final].head)
+            compete(hanger, hanger->deck[final].head, final + 1);
+
     Node *temp = hanger->deck[hanger->stretch - 1].head->link;
     int slar = temp->val;
     while (temp->link)
