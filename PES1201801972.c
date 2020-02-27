@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "assignment_2.h"
+int comper;
 
 typedef struct Node
 {
@@ -17,7 +18,7 @@ typedef struct Deck
 typedef struct Hanger //this structure holds the entire skewed multiarray
 {
     int stretch; //stretch describes the length of the multiarray heads.
-    Deck *deck;
+    Deck *deck;int comper;
 } Hanger;
 
 void compete(Hanger *, Node *, int);
@@ -31,6 +32,11 @@ void print_list(Node *);
 void find_second_greatest(int *numbers, int length)
 {
     comper=0;
+    if(length==1)
+    {
+        printf("only one element exists\n");
+        return;
+    }
     Hanger *hanger = hanger_init(length);
     for (int i = 0; i < length; i++)
     {
