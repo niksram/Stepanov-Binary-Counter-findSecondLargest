@@ -12,7 +12,7 @@ int main()
     //printf("enter elements\n");
     for (int i = 0; i < len; i++)
     {
-        scanf("%d", &arr[i]);
+        scanf("%d %d", &arr[i],&a);
         //printf("%d\n",n++);
     }
     find_second_greatest(arr, len);
