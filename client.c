@@ -16,4 +16,5 @@ int main()
         //printf("%d\n",n++);
     }
     find_second_greatest(arr, len);
+    free(arr);
 }

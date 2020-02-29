@@ -25,4 +25,4 @@ KEY TAKEAWAY:-
 
     The following simulation helps us to simulate how a tournament is conducted and how the winners and losers are arranged accordingly.
     The following implementation can be tweaked with the merge-function to simulate Merge-Sort.
-    the number of comparisons in the given alorithm is around n+log(n) which is less than 2*n in the Brute-Force method of finding second largest element.
+    the number of comparisons in the given alorithm is around n+log(n) which is less than 2*(n-1) in the Brute-Force method of finding second largest element.
