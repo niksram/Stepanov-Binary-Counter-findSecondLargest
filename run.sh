@@ -1,6 +1,4 @@
-gcc assignment_2.h
-gcc -c -g A2_PES1201801972.c
-gcc -g assignment_2.h client.c A2_PES1201801972.o
+make
 valgrind --leak-check=full ./a.out<checks/session5_sort_ip1.txt
 echo;
 cat checks/session5_sort_ip1.txt |sort -nr|head -n 3
@@ -56,3 +54,4 @@ echo;
 cat checks/session5_sort_ip_rand256k.txt |sort -nr|head -n 3
 read
 echo "exp"
+make clean
