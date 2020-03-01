@@ -5,4 +5,4 @@ client.o: client.c assignment_2.h
 A2_PES1201801972.o: assignment_2.h A2_PES1201801972.c
 	gcc -c assignment_2.h A2_PES1201801972.c
 clean:
-	rm -f A2_PES1201801972.o client.0
+	rm -f A2_PES1201801972.o client.o
