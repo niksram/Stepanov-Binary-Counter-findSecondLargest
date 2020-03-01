@@ -30,8 +30,8 @@ static void freelist(Node *);    // free all the nodes after the entered node in
 static void print_list(Node *);  // prints the elements of a list sequentially.
 
 void find_second_greatest(int *numbers, int length)
-{                                               
-    Hanger *hanger = hanger_init(length);   //as per doubt clarification, assumption made length>=1
+{
+    Hanger *hanger = hanger_init(length); //as per doubt clarification, assumption made length>=1
     for (int i = 0; i < length; i++)
     {
         Node *node = create_node(numbers[i]); // a node is created for every element.
@@ -52,10 +52,10 @@ void find_second_greatest(int *numbers, int length)
         if (slar < temp->val)
             slar = temp->val;
     }
-    freelist(hanger->deck[hanger->stretch - 1].head);
-    free(hanger->deck[hanger->stretch - 1].head);
-    free(hanger->deck);
-    free(hanger);
+    freelist(hanger->deck[hanger->stretch - 1].head); // frees the last deck linked list from the next node of the head
+    free(hanger->deck[hanger->stretch - 1].head); // frees the last deck's linked list head
+    free(hanger->deck); // frees the deck array
+    free(hanger); // frees the hanger frame
     printf("\n%d\n", slar);
 }
 
